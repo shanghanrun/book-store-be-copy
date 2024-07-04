@@ -45,7 +45,9 @@ mongoose
     if (bookCount === 0) {
       // 없으면 도서를 불러온다
       console.log('No books found in database. Fetching books from external API.');
-      await fetchNewBooks();
+
+      //! 아래를 잠시 주석처리한다. apikey받기 전까지
+      // await fetchNewBooks();
     } else {
       // 있으면 도서를 불러오지 않는다.
       console.log('Books already exist in the database. Skipping fetch.');
@@ -61,8 +63,8 @@ mongoose
     app.use('/api', indexRouter);
 
     // 서버 시작
-    app.listen(process.env.PORT || 4000, () => {
-      console.log(`Server is running on port 4000`);
+    app.listen(process.env.PORT || 5001, () => {
+      console.log(`Server is running on port 5001`);
     });
   })
   .catch((err) => {
