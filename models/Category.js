@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { validateModulesOption } = require('@babel/preset-env/lib/normalize-options');
+// const { validateModulesOption } = require('@babel/preset-env/lib/normalize-options'); 불필요한 코드
 const Book = require('./Book');
 
 const categorySchema = new mongoose.Schema(
