@@ -12,7 +12,7 @@ const { authenticate, checkAdminPermission } = require('../controllers/auth.cont
 
 const router = express.Router();
 
-router.get('/', getAllBooks);
+router.get('/', getAllBooks); // getBookList({})인 경우
 router.delete('/:id', authenticate, checkAdminPermission, deleteBook); // 어드민 권한 추가
 router.put('/:id', authenticate, checkAdminPermission, updateBook); // 어드민 권한 추가
 router.post('/', authenticate, checkAdminPermission, addBook); // 어드민 권한 추가

@@ -11,7 +11,9 @@ async function fetchNewBooks() {
   try {
     // 쿼리 별로 도서 불러오기
     await fetchBooks(page, 'ItemNewAll');
+    console.log('ItemNewAll 모두 받음')
     await fetchBooks(page, 'ItemNewSpecial');
+    console.log('ItemNewSpecial 모두 받음')
     await fetchBooks(page, 'BestSeller');
     await fetchBooks(page, 'BlogBest');
 

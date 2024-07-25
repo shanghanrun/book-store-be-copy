@@ -47,7 +47,7 @@ mongoose
       console.log('No books found in database. Fetching books from external API.');
 
       //! 아래를 잠시 주석처리한다. apikey받기 전까지
-      // await fetchNewBooks();
+      await fetchNewBooks();
     } else {
       // 있으면 도서를 불러오지 않는다.
       console.log('Books already exist in the database. Skipping fetch.');
