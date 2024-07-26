@@ -30,20 +30,38 @@ bookController.getAllBooks = async (req, res) => {
     if (publisher) condition.publisher = { $regex: publisher, $options: 'i' };
     if (queryType) condition.queryType = { $regex: queryType, $options: 'i' };
     if (categoryId) condition.categoryId = { $regex: categoryId, $options: 'i' };
-    const books = await Book.aggregate([
-      { $match: condition },
-      {
-        $group: {
-          _id: '$isbn',
-          docs: { $first: '$$ROOT' },
-          count: { $sum: 1 },
-        },
-      },
-      { $match: { count: { $eq: 1 } } },
-      { $unwind: '$docs' },
-      { $replaceRoot: { newRoot: '$docs' } },
-    ]);
-    res.status(200).json({ status: 'success', books });
+
+    // const books = await Book.aggregate([
+    //   { $match: condition },
+    //   {
+    //     $group: {
+    //       _id: '$isbn',
+    //       docs: { $first: '$$ROOT' },
+    //       count: { $sum: 1 },
+    //     },
+    //   },
+    //   { $match: { count: { $eq: 1 } } },
+    //   { $unwind: '$docs' },
+    //   { $replaceRoot: { newRoot: '$docs' } },
+    // ]);
+    // res.status(200).json({ status: 'success', books });
+
+    //! 위의 복잡한 내용대신에 set을 이용한다.
+    // 모든 도서 목록을 가져옵니다
+    const books = await Book.find(condition);
+
+    // ISBN을 기준으로 중복을 제거합니다
+    const seenIsbn = new Set();
+    const uniqueBooks = books.filter(book => {
+      if (seenIsbn.has(book.isbn)) {
+        return false; // 중복된 ISBN은 제외. 해당 book은 uniqueBooks에 담지 않음
+      } else {
+        seenIsbn.add(book.isbn);
+        return true; // 새로 추가된 ISBN은 포함
+      }
+    });
+
+    res.status(200).json({ status: 'success', books: uniqueBooks });
   } catch (err) {
     res.status(400).json({ status: 'fail', error: err.message });
   }
