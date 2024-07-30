@@ -64,15 +64,15 @@ commentController.deleteComment = async (req, res) => {
   }
 };
 
-commentController.getMyComment = async (req, res) => {
+commentController.getMyComments = async (req, res) => {
   try {
     const { userId } = req;
     const condition = { userId, isDeleted: false };
-    const comment = await Comment.find(condition).populate({
+    const comments = await Comment.find(condition).populate({
       path: 'bookId',
       models: 'Book',
     });
-    res.status(200).json({ status: 'success', comment });
+    res.status(200).json({ status: 'success', comments });
   } catch (err) {
     res.status(400).json({ status: 'fail', error: err.message });
   }

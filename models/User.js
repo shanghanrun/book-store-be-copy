@@ -21,8 +21,9 @@ const userSchema = new Schema(
     },
     userName: { type: String, required: true },
     role: { type: String, default: 'customer' }, //2types: customer, admin
-    level: { type: String, default: 'bronze' }, //2types: bronze, silver, gold, platinum
+    level: { type: String, default: 'bronze' }, //4types: bronze, silver, gold, platinum
     address: { type: Object },
+    deliveryAddress:{type:String, default:''},
     phone: { type: Number },
   },
   { timestamps: true },
