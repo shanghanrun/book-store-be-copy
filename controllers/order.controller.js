@@ -8,14 +8,14 @@ const orderController = {};
 orderController.createOrder = async (req, res) => {
   try {
     const { userId } = req;
-    const { totalPrice, shipTo, contact, orderList } = req.body;
+    const { totalPrice, shipTo, contact, orderItems } = req.body;
 
     const newOrder = new Order({
       userId,
       totalPrice,
       shipTo,
       contact,
-      items: orderList,
+      items: orderItems,
       orderNum: randomOrderNumGen(),
     });
 
@@ -41,6 +41,7 @@ orderController.getMyOrder = async (req, res) => {
   }
 };
 
+// userName을 명시하거나, 명시안해서 모든 유저의 쿼리가능
 orderController.getOrderList = async (req, res) => {
   try {
     const { orderNum, userName, startDate, endDate } = req.query;

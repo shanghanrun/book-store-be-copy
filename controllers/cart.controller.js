@@ -82,18 +82,17 @@ cartController.deleteCartItem = async (req, res) => {
 
 cartController.updateCartItemQty = async (req, res) => {
   try {
-    const { userId } = req;
-    const { bookId } = req.params; 
-    const { qty } = req.body;
+    const { userId } = req; //authenticate에서 얻은 거라서 ObjectId
+    const { bookId } = req.params; // URL에서 얻은 거라서 문자열
+    const { qty } = req.body;// 요청바디에 보존된 객체라서 숫자타입유지됨
 
     //! 문자열로 들어온 경우 ObjectId로 변환 (bookId)
-    //! userId는 백엔드에서 자체적으로 얻어진 거라서 ObjectId 타입이다.
     const bookIdObject = new mongoose.Types.ObjectId(bookId);
 
     //! 그리고 아래에서 qty도 통신으로 들어오면 문자열이 되니, 정수로 변환해야 된다.
     const updatedCart = await Cart.findOneAndUpdate(
 			{ userId, 'items.bookId': bookIdObject},
-			{ $set: { 'items.$.qty': parseInt(qty) } },
+			{ $set: { 'items.$.qty': qty } },
 			{ new: true }
 		).populate('items.bookId').populate('userId');
 		
