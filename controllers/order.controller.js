@@ -85,8 +85,7 @@ orderController.updateOrder = async (req, res) => {
 orderController.requestOrder = async (req, res) => {
   try {
     const { orderNum, requestType, reason } = req.body;
-    console.log('req.body', req.body);
-    const order = await Order.findOne({ orderNum });
+    const order = await Order.findOne({ orderNum }).populate('items.bookId');
     if (!order) throw new Error('주문을 찾을 수 없습니다.');
     order.request = { requestType, status: '대기 중', reason };
     await order.save();
@@ -128,7 +127,7 @@ orderController.getRequestList = async (req, res) => {
 orderController.getMyRequest = async (req, res) => {
   try {
     const { userId } = req;
-    const requests = await Order.find({ userId });
+    const requests = await Order.find({ userId }).populate('items.bookId');
     res.status(200).json({ status: 'success', requests });
   } catch (err) {
     return res.status(400).json({ status: 'fail', error: err.message });
