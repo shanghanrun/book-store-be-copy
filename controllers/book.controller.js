@@ -146,7 +146,8 @@ bookController.getBookDetailById = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new Error('Invalid ID format');
     }
-    const book = await Book.findById(id);
+    const idObject = new mongoose.Types.ObjectId(id)
+    const book = await Book.findById(idObject);
 
     // 작가 이름을 기반으로 작가를 찾고, 작가의 다른 책들을 가져옴
     const authorNames = book.author;
@@ -164,6 +165,8 @@ bookController.getBookDetailById = async (req, res) => {
         otherBooksByAuthor: authorBooks,
       },
     };
+
+    console.log('bookDetail response', response)
 
     if (!book) throw new Error('No item found');
     res.status(200).json(response);
