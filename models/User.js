@@ -24,7 +24,7 @@ const userSchema = new Schema(
     level: { type: String, default: 'bronze' }, //4types: bronze, silver, gold, platinum
     address: { type: Object },
     deliveryAddress:{type:String, default:''},
-    phone: { type: Number },
+    phone: { type: String },
   },
   { timestamps: true },
 );

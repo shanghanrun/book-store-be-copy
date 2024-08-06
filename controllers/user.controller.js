@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 
 const userController = {};
 
@@ -128,5 +129,14 @@ userController.deleteUser = async (req, res) => {
     res.status(400).json({ status: 'error', error: err.message });
   }
 };
-
+userController.deleteAdmin = async(req,res)=>{
+  try{
+    const {id} = req.params;
+    const idObject = new mongoose.Types.ObjectId(id)
+    await User.findByIdAndDelete(idObject)
+    res.status(200).json({status:'success'})
+  }catch(e){
+    res.status(400).json({status:'error', error:e.message})
+  }
+}
 module.exports = userController;

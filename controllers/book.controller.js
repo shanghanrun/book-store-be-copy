@@ -3,9 +3,28 @@ const Book = require('../models/Book');
 const Category = require('../models/Category');
 const bookController = {};
 
+// bookController.getBookList = async(req,res)=>{
+//   try {
+//     const { query } = req.query;
+//     console.log('getBookList query', query)
+//     const condition = { deleted: { $ne: true } };
+
+//     if (query) {
+//       // 쿼리 매개변수로 필터링 조건을 설정합니다.
+//       condition.title = new RegExp(query, 'i'); // 예를 들어 제목으로 검색
+//     }
+
+//     const books = await Book.find(condition);
+//     res.json({ books });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// }
+
 bookController.getAllBooks = async (req, res) => {
   try {
     const { total, isbn, title, author, publisher, queryType, categoryId } = req.query;
+    // console.log('getAllBooks total', total)
     let condition = { deleted: { $ne: true } };
 
     if (total)

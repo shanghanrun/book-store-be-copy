@@ -2,7 +2,7 @@ const User = require('../models/User');
 const Contact = require('../models/Contact');
 const contactController = {};
 
-contactController.creatContact = async (req, res) => {
+contactController.createContact = async (req, res) => {
   try {
     const { userId } = req;
     const { inquiryContent, inquiryType, image, emailReply, smsReply, privacyAgreement } = req.body;

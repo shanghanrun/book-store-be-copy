@@ -24,5 +24,6 @@ router.put('/myInfo/:id', authController.authenticate, userController.changeUser
 
 // mypage -delete user
 router.post('/delete/:id', authController.authenticate, userController.deleteUser);
+router.delete('/admin/delete/:id', userController.deleteAdmin);
 
 module.exports = router;
